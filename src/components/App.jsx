@@ -1,19 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const App = () => {
-  const rows = () => [
-    <tr>
-      <td>Marlon</td>
-      <td>marlonveliz.nero19@gmail.com</td>
-      <td>platzi.com</td>
-    </tr>,
+  const [users, setUsers] = useState([]);
 
-    <tr>
-      <td>Platzi</td>
-      <td>platzi@platzi.com</td>
-      <td>platzi.com</td>
-    </tr>,
-  ];
+  useEffect(() => {
+    setUsers([
+      {
+        id: 1,
+        name: "Marlon",
+        email: "marlonveliz.nero19@gmail.com",
+        website: "marlon.com",
+      },
+      {
+        id: 2,
+        name: "Platzi",
+        email: "platzi@platzi.com",
+        website: "platzi.com",
+      },
+    ]);
+  }, []);
+
+  const rows = () =>
+    users.map((user) => (
+      <tr key={user.id}>
+        <td>{user.name}</td>
+        <td>{user.email}</td>
+        <td>{user.website}</td>
+      </tr>
+    ));
 
   return (
     <div className="margen">

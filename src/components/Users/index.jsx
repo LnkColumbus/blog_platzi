@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import * as usersActions from "../../actions/usersActions";
 
 const Users = (props) => {
-  const [users, setUsers] = useState([]);
+  // const [usuarios, setUsarios] = useState([]);
+  const { getUsers, users } = props;
 
-  const getUsers = async () => {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/users"
-    );
-    setUsers(response.data);
-  };
+  const getUsarios = useCallback(() => {
+    getUsers();
+  }, [getUsers]);
 
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [getUsarios, getUsers]);
 
   const rows = () =>
     users.map((user) => (
@@ -26,7 +23,6 @@ const Users = (props) => {
       </tr>
     ));
 
-  console.log(props);
   return (
     <div>
       <table className="table">

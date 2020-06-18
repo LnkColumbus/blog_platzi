@@ -4,7 +4,7 @@ import * as usersActions from "../../actions/usersActions";
 
 const Users = (props) => {
   // const [usuarios, setUsarios] = useState([]);
-  const { getUsers, users } = props;
+  const { getUsers, users, loading, error } = props;
 
   const getUsarios = useCallback(() => {
     getUsers();

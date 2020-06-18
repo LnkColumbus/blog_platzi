@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
+import Spinner from "../General/Spinner";
 import * as usersActions from "../../actions/usersActions";
 
 const Users = (props) => {
@@ -14,17 +15,11 @@ const Users = (props) => {
     getUsers();
   }, [getUsarios, getUsers]);
 
-  const rows = () =>
-    users.map((user) => (
-      <tr key={user.id}>
-        <td>{user.name}</td>
-        <td>{user.email}</td>
-        <td>{user.website}</td>
-      </tr>
-    ));
-
-  return (
-    <div>
+  const showContent = () => {
+    if (loading) {
+      return <Spinner />;
+    }
+    return (
       <table className="table">
         <thead>
           <tr>
@@ -35,8 +30,19 @@ const Users = (props) => {
         </thead>
         <tbody>{rows()}</tbody>
       </table>
-    </div>
-  );
+    );
+  };
+
+  const rows = () =>
+    users.map((user) => (
+      <tr key={user.id}>
+        <td>{user.name}</td>
+        <td>{user.email}</td>
+        <td>{user.website}</td>
+      </tr>
+    ));
+
+  return <div>{showContent()}</div>;
 };
 
 const mapStateToProps = (reducers) => {

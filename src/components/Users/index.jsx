@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import Spinner from "../General/Spinner";
+import Fatal from "../General/Fatal";
 import * as usersActions from "../../actions/usersActions";
 
 const Users = (props) => {
@@ -15,10 +16,24 @@ const Users = (props) => {
     getUsers();
   }, [getUsarios, getUsers]);
 
+  const rows = () =>
+    users.map((user) => (
+      <tr key={user.id}>
+        <td>{user.name}</td>
+        <td>{user.email}</td>
+        <td>{user.website}</td>
+      </tr>
+    ));
+
   const showContent = () => {
     if (loading) {
       return <Spinner />;
     }
+
+    if (error) {
+      return <Fatal message={error} />;
+    }
+
     return (
       <table className="table">
         <thead>
@@ -33,14 +48,8 @@ const Users = (props) => {
     );
   };
 
-  const rows = () =>
-    users.map((user) => (
-      <tr key={user.id}>
-        <td>{user.name}</td>
-        <td>{user.email}</td>
-        <td>{user.website}</td>
-      </tr>
-    ));
+  console.log(loading);
+  console.log(error);
 
   return <div>{showContent()}</div>;
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Spinner from "../General/Spinner";
 import Fatal from "../General/Fatal";
@@ -7,15 +7,13 @@ import * as usersActions from "../../actions/usersActions";
 
 const Users = (props) => {
   // const [usuarios, setUsarios] = useState([]);
-  const { getUsers, users, loading, error } = props;
-
-  const getUsarios = useCallback(() => {
-    getUsers();
-  }, [getUsers]);
+  const { getUsers, loading, error, users } = props;
 
   useEffect(() => {
-    getUsers();
-  }, [getUsarios, getUsers]);
+    if (!users.length) {
+      getUsers();
+    }
+  }, [users, getUsers]);
 
   const showContent = () => {
     if (loading) {
@@ -29,6 +27,7 @@ const Users = (props) => {
     return <Table />;
   };
 
+  console.log(props);
   return (
     <div>
       <h1>Usuarios</h1>
